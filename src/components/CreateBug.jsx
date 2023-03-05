@@ -1,15 +1,19 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmarkCircle } from "@fortawesome/free-regular-svg-icons";
-import { useEffect, useState } from "react";
+import {
+  faCircle,
+  faCircleDot,
+  faXmarkCircle,
+} from "@fortawesome/free-regular-svg-icons";
+import { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import StatusSelector from "./StatusSelector";
 
 const CreateBug = ({ setShowForm }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [urgency, setUrgency] = useState(0);
-  const [status, setStatus] = useState("");
   const [tags, setTags] = useState([]);
+  const [status, setStatus] = useState("pending");
 
   const animatedComponents = makeAnimated();
 
@@ -24,12 +28,14 @@ const CreateBug = ({ setShowForm }) => {
     e.preventDefault();
     console.log(title);
     console.log(description);
-    console.log(urgency);
     console.log(status);
     console.log(tags);
-  };
 
-  useEffect(() => {}, []);
+    setTitle("");
+    setDescription("");
+    setStatus("pending");
+    setTags([]);
+  };
 
   return (
     <div className="relative h-fit w-4/5">
@@ -63,6 +69,9 @@ const CreateBug = ({ setShowForm }) => {
           closeMenuOnSelect={true}
           components={animatedComponents}
         />
+
+        <label>Status</label>
+        <StatusSelector status={status} setStatus={setStatus} />
 
         <div className="w-full flex items-center justify-end">
           <button className="p-5">submit</button>
